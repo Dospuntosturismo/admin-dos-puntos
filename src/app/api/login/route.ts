@@ -7,7 +7,9 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = (await request.json()) as { email?: string; password?: string };
+    const { email, password } = (await request.json()) as { email?: string; password?: string }
+
+    // console.log("Login attempt:", { email, password });
 
     if (!email || !password) {
       return Response.json({ error: "Email y password son obligatorios" }, { status: 400 });
@@ -19,8 +21,6 @@ export async function POST(request: Request) {
       .select("id,name,email,password,rol")
       .eq("email", email.trim().toLowerCase())
       .maybeSingle();
-
-      console.log("Login attempt:", { email, error, data });
 
     if (error) throw error;
 

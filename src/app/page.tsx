@@ -14,9 +14,9 @@ const storageKeys = {
 
 const resources: ClientResource[] = [
   {
-    key: "paquetes",
-    label: resourceConfig.paquetes.label,
-    fields: resourceConfig.paquetes.fields
+    key: "packages",
+    label: "Paquetes",
+    fields: resourceConfig.packages.fields
   },
   {
     key: "salidas",
@@ -36,16 +36,16 @@ const resources: ClientResource[] = [
 ];
 
 const iconByResource: Record<ResourceName, React.ComponentType<{ className?: string }>> = {
-  paquetes: Package,
   salidas: PlaneTakeoff,
   usuarios: Users,
-  paquete: Database
+  paquete: Database,
+  packages: Package
 };
 
 export default function Home() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState<AdminUser | null>(null);
-  const [activeResource, setActiveResource] = useState<ResourceName>("paquetes");
+  const [activeResource, setActiveResource] = useState<ResourceName>("packages");
   const [packageOptions, setPackageOptions] = useState<PackageOption[]>([]);
 
   const currentResource = useMemo(

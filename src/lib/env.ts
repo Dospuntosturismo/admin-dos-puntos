@@ -4,7 +4,6 @@ export const env = {
   storageBucket: process.env.SUPABASE_STORAGE_BUCKET ?? "imagenes",
   adminSessionSecret: process.env.ADMIN_SESSION_SECRET ?? "",
   tables: {
-    paquetes: process.env.SUPABASE_TABLE_PAQUETES ?? "paquetes",
     paqueteCatalogo: process.env.SUPABASE_TABLE_PAQUETE_CATALOGO ?? "paquete",
     salidas: process.env.SUPABASE_TABLE_SALIDAS ?? "salidas",
     usuarios: process.env.SUPABASE_TABLE_USUARIOS ?? "usuarios",

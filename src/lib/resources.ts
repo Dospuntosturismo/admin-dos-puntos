@@ -1,6 +1,6 @@
 import { env } from "./env";
 
-export type ResourceName = "paquetes" | "salidas" | "usuarios" | "paquete";
+export type ResourceName = "salidas" | "usuarios" | "paquete" | "packages";
 
 export type FieldType = "text" | "email" | "password" | "textarea" | "image" | "select";
 
@@ -21,17 +21,6 @@ export type ResourceConfig = {
 };
 
 export const resourceConfig: Record<ResourceName, ResourceConfig> = {
-  paquetes: {
-    label: "Paquetes",
-    table: env.tables.paquetes,
-    defaultOrder: "id",
-    searchable: ["titulo", "paquete"],
-    fields: [
-      { key: "titulo", label: "Titulo", type: "text", required: true },
-      { key: "image", label: "Imagen", type: "image", required: true },
-      { key: "paquete", label: "Paquete", type: "select", required: true, placeholder: "Codigo" }
-    ]
-  },
   salidas: {
     label: "Salidas",
     table: env.tables.salidas,
@@ -64,6 +53,22 @@ export const resourceConfig: Record<ResourceName, ResourceConfig> = {
     fields: [
       { key: "nombre", label: "Nombre", type: "text", required: true },
       { key: "codigo", label: "Codigo", type: "text", required: true }
+    ]
+  },
+  packages: {
+    label: "Packages",
+    table: env.tables.packages,
+    defaultOrder: "id",
+    searchable: ["title", "duration", "price", "location", "info"],
+    fields: [
+      { key: "title", label: "Nombre", type: "text", required: true },
+      { key: "duration", label: "Duración", type: "text", required: true },
+      { key: "price", label: "Precio", type: "text", required: true },
+      { key: "location", label: "Ubicación", type: "text", required: true },
+      { key: "info", label: "Información", type: "textarea", required: true },
+      { key: "image", label: "Imagen", type: "image", required: true },
+      { key: "paquete", label: "Paquete", type: "select", required: true, placeholder: "Codigo" },
+      { key: "imageInfo", label: "Imagen para info", type: "image", required: true }
     ]
   }
 };
