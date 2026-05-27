@@ -1,43 +1,37 @@
 "use client";
+import { FormEvent, useState } from "react"
+import { Lock, LogIn, Mail, Eye, EyeOff } from "lucide-react"
+import Link from "next/link"
 
-import { FormEvent, useState } from "react";
-import Link from "next/link";
-import { Lock, LogIn, Mail, Eye, EyeOff } from "lucide-react";
-import type { AdminUser } from "@/types/admin";
+const Forgot = () => {
+    const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState("")
+      const [shown, setShown] = useState(false)
 
-type LoginFormProps = {
-  onLogin: (token: string, user: AdminUser) => void;
-};
 
-export function LoginForm({ onLogin }: LoginFormProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("")
-  const [shown, setShown] = useState(false)
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      const result = await response.json();
-
-      if (!response.ok) throw new Error(result.error ?? "No se pudo iniciar sesion");
-      onLogin(result.token, result.user);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo iniciar sesion");
-    } finally {
-      setLoading(false);
-    }
-  }
-
+      async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+          event.preventDefault();
+          setLoading(true);
+          setError("");
+      
+          try {
+            const response = await fetch("/api/forgot", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password })
+            });
+            const result = await response.json();
+      
+            if (!response.ok) throw new Error(result.error ?? "No se pudo cambiar la contraseña");
+            // onLogin(result.token, result.user);
+          } catch (err) {
+            setError(err instanceof Error ? err.message : "No se pudo cambiar la contraseña");
+          } finally {
+            setLoading(false);
+          }
+        }
   return (
     <main className="grid min-h-screen place-items-center bg-mist px-4">
       <section className="w-full max-w-md rounded-lg bg-white p-8 shadow-soft">
@@ -48,7 +42,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           </div>
           <h1 className="mt-3 text-3xl font-semibold text-dos-puntos-gray">Administrador de contenido</h1>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Ingresa con un usuario registrado en la tabla usuarios.
+            Cambio de Contraseña
           </p>
         </div>
 
@@ -88,9 +82,6 @@ export function LoginForm({ onLogin }: LoginFormProps) {
             </span>
           </label>
           <div>
-            <Link href="/forgot">
-            Olvidaste tu contraseña?{" "}
-            </Link>
           </div>
 
           {error ? (
@@ -103,10 +94,18 @@ export function LoginForm({ onLogin }: LoginFormProps) {
             disabled={loading}
           >
             <LogIn className="h-4 w-4" />
-            {loading ? "Ingresando..." : "Ingresar"}
+            {loading ? "Cambiando..." : "Cambiar Contraseña"}
           </button>
         </form>
+        <div className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-slate-700">
+            <LogIn className="h-4 w-4" />
+            <Link href="/">
+            <p>Volver al Login</p>
+            </Link>
+        </div>
       </section>
     </main>
-  );
+  )
 }
+
+export default Forgot
